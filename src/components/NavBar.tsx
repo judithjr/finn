@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { useRouter } from "next/router";
+import { Web3Button } from "@web3modal/react";
 
 const Navbar = () => {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
@@ -51,6 +52,7 @@ const Navbar = () => {
             </span>
           </Link>
           <div className="flex md:order-2" style={{ marginLeft: "2rem" }}>
+            <Web3Button />
             <button
               data-collapse-toggle="mobile-menu-4"
               type="button"

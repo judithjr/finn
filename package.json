@@ -10,10 +10,14 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
+    "@web3modal/ethereum": "^2.7.1",
+    "@web3modal/react": "^2.7.1",
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18",
-    "react-icons": "^4.12.0"
+    "react-icons": "^4.12.0",
+    "viem": "^1.19.11",
+    "wagmi": "^1.4.10"
   },
   "devDependencies": {
     "@types/node": "^20",
