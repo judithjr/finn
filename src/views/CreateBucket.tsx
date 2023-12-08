@@ -3,6 +3,14 @@ import Input from "@/components/form-elements/input";
 import { Listbox, Transition } from "@headlessui/react";
 import { IoChevronDownOutline } from "react-icons/io5";
 import { FaCheck } from "react-icons/fa6";
+import factoryABI from "@/utils/contract/factoryABI.json";
+import {
+  useAccount,
+  useContractWrite,
+  usePrepareContractWrite,
+  useWaitForTransaction,
+} from "wagmi";
+import {mumbaiAddress} from "@/utils/constants";
 
 const networkOptions = [
   { name: "Arbitrum", value: "Arbitrum" },
@@ -13,6 +21,33 @@ export default function CreateBucket() {
   const [bucketName, setBucketName] = useState("");
   const [bucketDesc, setBucketDesc] = useState("");
   const [network, setNetwork] = useState(networkOptions[0]);
+
+  const { config } = usePrepareContractWrite({
+    address:mumbaiAddress ,
+    abi: factoryABI,
+    functionName: "createBucket",
+    args: [
+      1000, //total value,
+      false, //public,
+      10, //locked time duration,
+      ["0x2da724Bf044a7a0eb2e427ba35E3cD65B91C8beF"], //token addresses,
+      [100],
+      ["arb"] ,//token weights,
+      "bucketName", //name,
+      "bucketDesc", //description,
+    ],
+
+    onError: (error) => {
+      console.log("Error", error);
+    },
+    onSuccess: (result) => {
+      console.log("Success", result);
+    },
+  });
+
+  const { data, write, error } = useContractWrite(config);
+
+  const { isSuccess } = useWaitForTransaction({ hash: data?.hash });
   return (
     <main className="flex p-5 justify-center items-center">
       <div className="flex flex-col w-[100%] md:w-[30%] gap-4 p-10 border border-gray-400 rounded-2xl">
@@ -95,7 +130,13 @@ export default function CreateBucket() {
           </div>
         </Listbox>
         <div className="flex mt-2 items-center justify-center">
-          <button className="flex flex-row w-[60%] md:w-[50%] gap-2 font=['Roobert'] justify-center items-center text-teal-300 bg-neutral-700 hover:bg-teal-400 hover:text-black p-2 px-4 rounded-3xl">
+          <button
+          onClick={() => {
+          
+            write?.();
+            // console.log("data", data);
+          }}
+          className="flex flex-row w-[60%] md:w-[50%] gap-2 font=['Roobert'] justify-center items-center text-teal-300 bg-neutral-700 hover:bg-teal-400 hover:text-black p-2 px-4 rounded-3xl">
             Create bucket
           </button>
         </div>
