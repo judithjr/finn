@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
+    "@web3modal/ethereum": "^2.7.1",
     "@web3modal/react": "^2.7.1",
     "next": "14.0.4",
     "react": "^18",
