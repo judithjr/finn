@@ -15,10 +15,9 @@ export default function App({ Component, pageProps }: AppProps) {
         </div>
       </WagmiConfig>
       <Web3Modal
-        projectId={""}
+        projectId={process.env.NEXT_PUBLIC_PROJECT_ID || ""}
         ethereumClient={ethereumClient}
       />
     </>
   );
 }
-
