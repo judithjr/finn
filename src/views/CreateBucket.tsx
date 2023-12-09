@@ -1,7 +1,7 @@
 import { useState, Fragment, Key } from "react";
 import { useStore } from "@/store";
 import Input from "@/components/form-elements/input";
-import { Listbox, Transition } from "@headlessui/react";
+import { Listbox, Switch, Transition } from "@headlessui/react";
 import { IoChevronDownOutline } from "react-icons/io5";
 import { FaCheck } from "react-icons/fa6";
 import factoryABI from "@/utils/contract/factoryABI.json";
@@ -18,6 +18,7 @@ export default function CreateBucket() {
   const [bucketName, setBucketName] = useState("");
   const [bucketDesc, setBucketDesc] = useState("");
   const [isPublic, setIsPublic] = useState(false);
+  const [enabled, setEnabled] = useState(false);
 
   const {
     selectedNetwork,
@@ -31,14 +32,14 @@ export default function CreateBucket() {
     abi: factoryABI,
     functionName: "createBucket",
     args: [
-      0, 
-      isPublic, 
+      0,
+      isPublic,
       0, //duration
-      [], 
+      [],
       [100],
       ["arb"],
       bucketName,
-      bucketDesc, 
+      bucketDesc,
     ],
 
     onError: (error) => {
@@ -227,13 +228,31 @@ export default function CreateBucket() {
             );
           })}
         </div>
+        <div className="flex flex-row gap-4 font-['Roobert'] p-2 items-center">
+          <Switch
+            checked={enabled}
+            onChange={setEnabled}
+            className={`${
+              enabled ? "bg-teal-400" : "bg-neutral-700"
+            } relative inline-flex h-6 w-11 items-center rounded-full`}
+          >
+            <span
+              className={`${
+                enabled ? "translate-x-6" : "translate-x-1"
+              } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+            />
+          </Switch>
+          <span className={`${enabled ? "text-teal-200" : "text-gray-200"}`}>
+            Make it public & Earn 💰
+          </span>
+        </div>
         <div className="flex mt-2 items-center justify-center">
           <button
             onClick={() => {
               // write?.();
               console.log("data", selectedTokens);
             }}
-            className="flex flex-row w-[60%] md:w-[50%] gap-2 font=['Roobert'] justify-center items-center text-teal-300 bg-neutral-800 border border-teal-400 hover:bg-teal-400 hover:text-black p-2 px-4 rounded-3xl"
+            className="flex flex-row w-full gap-2 font=['Roobert'] font-medium justify-center items-center border border-teal-400 bg-teal-400 hover:bg-teal-500 text-black p-2 px-4 rounded-3xl"
           >
             Create bucket
           </button>
