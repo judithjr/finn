@@ -1,14 +1,13 @@
-import Link from "next/link";
-import Image from "next/image";
-import { useState, useEffect } from "react";
-import { HiMenuAlt3 } from "react-icons/hi";
-import { useRouter } from "next/router";
-import { Web3Button } from "@web3modal/react";
+import Link from 'next/link';
+import Image from 'next/image';
+import { useState, useEffect } from 'react';
+import { HiMenuAlt3 } from 'react-icons/hi';
+import { useRouter } from 'next/router';
 
 const Navbar = () => {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const { pathname } = useRouter();
-  const [navbarBg, setNavbarBg] = useState("bg-transparent");
+  const [navbarBg, setNavbarBg] = useState('bg-transparent');
   const [dividerDisabled, setDividerDisabled] = useState(false);
 
   useEffect(() => {
@@ -17,17 +16,17 @@ const Navbar = () => {
       const triggerHeight = 50;
 
       if (scrollY > triggerHeight) {
-        setNavbarBg("bg-black");
+        setNavbarBg('bg-black');
         setDividerDisabled(true);
       } else {
-        setNavbarBg("bg-transparent");
+        setNavbarBg('bg-transparent');
         setDividerDisabled(false);
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
@@ -35,7 +34,7 @@ const Navbar = () => {
     <>
       <nav
         className={`navbar fixed z-10 w-full mx-auto px-2 sm:px-4 py-3 rounded drop-shadow-md ${navbarBg} ${
-          isOpenMenu ? "bg-[#161616]" : "bg-transparent"
+          isOpenMenu ? 'bg-[#161616]' : 'bg-transparent'
         } bg-opacity-90`}
       >
         <div className="max-w-[1080px] container flex flex-wrap justify-between items-center mx-auto">
@@ -51,8 +50,8 @@ const Navbar = () => {
               Finn
             </span>
           </Link>
-          <div className="flex md:order-2" style={{ marginLeft: "2rem" }}>
-            <Web3Button />
+          <div className="flex md:order-2" style={{ marginLeft: '2rem' }}>
+            <w3m-button />
             <button
               data-collapse-toggle="mobile-menu-4"
               type="button"
@@ -65,7 +64,7 @@ const Navbar = () => {
           </div>
           <div
             className={`${
-              isOpenMenu ? "block" : "hidden"
+              isOpenMenu ? 'block' : 'hidden'
             } justify-between items-center w-full md:flex md:w-auto md:order-1`}
           >
             <ul className="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
@@ -74,7 +73,7 @@ const Navbar = () => {
                 <Link
                   href="/"
                   className={`${
-                    pathname === "/" ? "underline" : ""
+                    pathname === '/' ? 'underline' : ''
                   } block underline-offset-4 py-2 pr-4 pl-3 text-neutral-300 hover:text-teal-400 border-b border-neutral-400 hover:bg-neutral-800 md:hover:bg-transparent md:border-0 md:hover:font-bold md:p-0`}
                   aria-current="page"
                 >
@@ -85,7 +84,7 @@ const Navbar = () => {
                 <Link
                   href="/bucket"
                   className={`${
-                    pathname === "/bucket" ? "underline" : ""
+                    pathname === '/bucket' ? 'underline' : ''
                   } block underline-offset-4 py-2 pr-4 pl-3 text-neutral-300 hover:text-teal-400 border-b border-neutral-400 hover:bg-neutral-800 md:hover:bg-transparent md:border-0 md:hover:font-bold md:p-0`}
                   aria-current="page"
                 >
@@ -96,7 +95,7 @@ const Navbar = () => {
                 <Link
                   href="/deposit"
                   className={`${
-                    pathname === "/deposit" ? "underline" : ""
+                    pathname === '/deposit' ? 'underline' : ''
                   } block underline-offset-4 py-2 pr-4 pl-3 text-neutral-300 hover:text-teal-400 border-b border-neutral-400 hover:bg-neutral-800 md:hover:bg-transparent md:border-0 md:hover:font-bold md:p-0`}
                   aria-current="page"
                 >
@@ -107,7 +106,7 @@ const Navbar = () => {
                 <Link
                   href="/faq"
                   className={`${
-                    pathname === "faq" ? "underline" : ""
+                    pathname === 'faq' ? 'underline' : ''
                   } block underline-offset-4 py-2 pr-4 pl-3 text-neutral-300 hover:text-teal-400 border-b border-neutral-400 hover:bg-neutral-800 md:hover:bg-transparent md:border-0 md:hover:font-bold md:p-0`}
                   aria-current="page"
                 >

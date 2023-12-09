@@ -4,10 +4,10 @@ import {
   EthereumClient,
   w3mConnectors,
   w3mProvider,
-} from "@web3modal/ethereum";
+} from '@web3modal/ethereum';
 
 const supportedChains = [arbitrum, base, polygonMumbai];
-const projectId = "33e28c5d43009b3668cccf62984e6dbe";
+const projectId = '33e28c5d43009b3668cccf62984e6dbe';
 
 const { publicClient } = configureChains(
   // @ts-ignore
