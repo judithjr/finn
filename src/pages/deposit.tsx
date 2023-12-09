@@ -1,11 +1,9 @@
-import Card from "@/components/Card";
+import Card from "@/components/card";
 import Head from "next/head";
 import { useContractRead, useAccount } from "wagmi";
 import { mumbaiAddress } from "@/utils/constants";
 import factoryABI from "@/utils/contract/factoryABI.json";
-import finnABI from "@/utils/contract/finnABI.json";
 import { useEffect, useState } from "react";
-import {ethers} from "ethers";
 
 const buckets = [
   {
@@ -56,10 +54,7 @@ export default function Deposit() {
     try {
       if (data.length > 0) {
         for (let index = 0; index < data.length; index++) {
-        console.log(data[index]);
-         
-         ethers.co
-          
+        console.log(data[index]);          
         }
       }
     } catch (error) {

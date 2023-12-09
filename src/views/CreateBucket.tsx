@@ -46,14 +46,6 @@ export default function CreateBucket() {
       [''],
       bucketName,
       bucketDesc,
-      // 0,
-      // false,
-      // 1, //duration
-      // ["0xDC62a0f8C6a48A59C65Dd0aA6941E4b96634C2fE"],
-      // [100],
-      // [""],
-      // "bucketName",
-      // "bucketDesc",
     ],
 
     onError: (error) => {
@@ -68,11 +60,6 @@ export default function CreateBucket() {
 
   const { isSuccess } = useWaitForTransaction({ hash: data?.hash });
 
-
-  useEffect(() => {
-   
-  }
-  , [isSuccess])
   return (
     <main className="flex p-5 justify-center items-center">
       <div className="flex flex-col w-[100%] md:w-[30%] gap-4 p-10 border border-gray-400 rounded-2xl">
