@@ -17,7 +17,7 @@ const Navbar = () => {
       const triggerHeight = 50;
 
       if (scrollY > triggerHeight) {
-        setNavbarBg("bg-[#161616]");
+        setNavbarBg("bg-black");
         setDividerDisabled(true);
       } else {
         setNavbarBg("bg-transparent");
