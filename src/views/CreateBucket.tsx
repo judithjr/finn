@@ -13,6 +13,7 @@ import {
 } from "wagmi";
 import { mumbaiAddress, networkOptions, tokenOptions } from "@/utils/constants";
 import Image from "next/image";
+import Chip from "@/components/Chip";
 
 export default function CreateBucket() {
   const [bucketName, setBucketName] = useState("");
@@ -22,6 +23,7 @@ export default function CreateBucket() {
     setSelectedNetwork,
     selectedTokens,
     setSelectedTokens,
+    setProportion,
   } = useStore();
 
   const { config } = usePrepareContractWrite({
@@ -142,6 +144,8 @@ export default function CreateBucket() {
           value={selectedTokens}
           onChange={(value) => {
             setSelectedTokens(value);
+            const arr = new Array(value.length).fill(0);
+            setProportion(arr);
           }}
           multiple
         >
@@ -202,28 +206,14 @@ export default function CreateBucket() {
           </div>
         </Listbox>
         <div className="flex flex-wrap gap-2 justify-center items-center">
-          {selectedTokens.map((token) => {
-            return (
-              <div className="flex w-36" key={token.name}>
-                <span className="inline-flex items-center px-2 gap-1 text-sm text-gray-200 bg-neutral-800 border rounded-e-0 border-teal-600 rounded-s-md">
-                  <Image
-                    src={token.logoURI}
-                    className="border border-teal-400 rounded-full"
-                    alt="token"
-                    width={20}
-                    height={20}
-                  />
-                  {token.name}
-                </span>
-                <input
-                  type="text"
-                  id="allocation"
-                  className="rounded-none rounded-e-lg bg-neutral-900 border text-gray-200 focus:ring-teal-400 focus:border-teal-400 block flex-1 min-w-0 w-full text-sm border-teal-600 p-2.5"
-                  placeholder="10%"
-                />
-              </div>
-            );
-          })}
+          {selectedTokens.map((token, index) => (
+            <Chip
+              key={index}
+              name={token.name}
+              url={token.logoURI}
+              index={index}
+            />
+          ))}
         </div>
         <div className="flex mt-2 items-center justify-center">
           <button
