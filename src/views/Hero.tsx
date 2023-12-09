@@ -14,14 +14,14 @@ const Card = ({ icon, title, desc, content }: CardProps) => {
   return (
     <div className="w-full md:w-[32%] mb-2 m-5 sm:m-5 md:m-1 lg:m-1 bg-neutral-100/80 border border-violet-500 rounded-xl">
       <div className="flex flex-col px-8 py-10">
-        <div className="flex flex-row gap-4 items-center">
+        <div className="flex flex-row gap-4 items-start">
           {icon}
           <div className="flex flex-col items-start">
             <h5 className="text-xl font-medium text-gray-900">{title}</h5>
             <span className="text-sm text-gray-500">{desc}</span>
           </div>
         </div>
-        <div className="flex mt-2 space-x-3 mx-auto md:mt-4">
+        <div className="flex mt-2 space-x-3 mx-auto">
           <p className="py-2 text-sm text-gray-700 font-medium">{content}</p>
         </div>
       </div>
@@ -34,7 +34,7 @@ const cardData = [
     id: 1,
     icon: (
       <FaBucket
-        className="mb-3 p-3 rounded-full shadow-lg text-violet-700"
+        className="mb-3 p-3 border border-violet-500 rounded-full shadow-xl text-violet-700"
         size={50}
       />
     ),
@@ -48,7 +48,7 @@ const cardData = [
     id: 2,
     icon: (
       <RiStockFill
-        className="mb-3 p-3 rounded-full shadow-lg text-violet-700"
+        className="mb-3 p-3 border border-violet-500 rounded-full shadow-xl text-violet-700"
         size={50}
       />
     ),
@@ -61,7 +61,7 @@ const cardData = [
     id: 3,
     icon: (
       <IoBriefcase
-        className="mb-3 p-3 rounded-full shadow-lg text-violet-700"
+        className="mb-3 p-3 border border-violet-500 rounded-full shadow-xl text-violet-700"
         size={50}
       />
     ),
@@ -80,7 +80,7 @@ export default function Hero() {
           Top features
         </h1>
       </div>
-      <div className="flex flex-wrap px-44">
+      <div className="flex flex-wrap md:px-44">
         {cardData.map((card) => (
           <Card
             key={card.id}
