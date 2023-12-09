@@ -17,6 +17,8 @@ import Image from "next/image";
 export default function CreateBucket() {
   const [bucketName, setBucketName] = useState("");
   const [bucketDesc, setBucketDesc] = useState("");
+  const [isPublic, setIsPublic] = useState(false);
+
   const {
     selectedNetwork,
     setSelectedNetwork,
@@ -29,14 +31,14 @@ export default function CreateBucket() {
     abi: factoryABI,
     functionName: "createBucket",
     args: [
-      1000, //total value,
-      false, //public,
-      10, //locked time duration,
-      ["0x2da724Bf044a7a0eb2e427ba35E3cD65B91C8beF"], //token addresses,
+      0, 
+      isPublic, 
+      0, //duration
+      [], 
       [100],
-      ["arb"], //token weights,
-      "bucketName", //name,
-      "bucketDesc", //description,
+      ["arb"],
+      bucketName,
+      bucketDesc, 
     ],
 
     onError: (error) => {
@@ -228,8 +230,8 @@ export default function CreateBucket() {
         <div className="flex mt-2 items-center justify-center">
           <button
             onClick={() => {
-              write?.();
-              // console.log("data", data);
+              // write?.();
+              console.log("data", selectedTokens);
             }}
             className="flex flex-row w-[60%] md:w-[50%] gap-2 font=['Roobert'] justify-center items-center text-teal-300 bg-neutral-800 border border-teal-400 hover:bg-teal-400 hover:text-black p-2 px-4 rounded-3xl"
           >
