@@ -1,4 +1,4 @@
-export const mumbaiAddress = "0xDC62a0f8C6a48A59C65Dd0aA6941E4b96634C2fE";
+export const mumbaiAddress = "0x9ba0D7749CC64FdCa0fD2c81E57496Ae0D9776c5";
 
 export type TokenOption = {
     name: string,
@@ -67,6 +67,24 @@ const BASE: TokenOption[] = [
     },
 ]
 
+const POLYGON: TokenOption[] = [
+    {
+        name: "WMATIC",
+        contractAddress: "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
+        logoURI:"https://tokens.1inch.io/0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270.png",
+    },
+    {
+        name:"COMP",
+        contractAddress:"0x8505b9d2254a7ae468c0e9dd10ccea3a837aef5c",
+        logoURI:"https://tokens.1inch.io/0xc00e94cb662c3520282e6f5717214004a7f26888.png",
+    },
+    {
+        name:"ETH",
+        contractAddress:"0x7ceb23fd6bc0add59e62ac25578270cff1b9f619",
+        logoURI:"https://tokens.1inch.io/0x7ceb23fd6bc0add59e62ac25578270cff1b9f619.png"
+    }
+];
+
 export const networkOptions: NetworkOptions[] = [
     {
         id: 0,
@@ -74,10 +92,16 @@ export const networkOptions: NetworkOptions[] = [
     }, {
         id: 1,
         name: "Base"
+    },
+    {
+        id: 2,
+        name: "Polygon"
+    
     }
 ];
 
 export const tokenOptions: TokenOptions = [
     ARB,
     BASE,
+    POLYGON
 ];

@@ -58,6 +58,5 @@ export default function useCreateBucket() {
             console.log(error);
         }
     }
-
     return { createBucket };
 }

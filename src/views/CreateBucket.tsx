@@ -4,7 +4,6 @@ import Input from '@/components/form-elements/input';
 import { Listbox, Switch, Transition } from '@headlessui/react';
 import { IoChevronDownOutline } from 'react-icons/io5';
 import { FaCheck } from 'react-icons/fa6';
-import convertArrayToNumbers from '@/utils/converter';
 import {  networkOptions, tokenOptions } from '@/utils/constants';
 import Chip from '@/components/Chip';
 import useCreateBucket from '@/hooks/useCreateBucket';
