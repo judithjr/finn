@@ -41,7 +41,7 @@ const tokenDetails = [
 
 const Chips = ({ name, uri }: IChip) => {
   return (
-    <div className="flex flex-row p-2 px-6 bg-neutral-800 text-gray-200 justify-between rounded-lg">
+    <div className="flex flex-row p-2 px-4 bg-neutral-800 text-gray-200 justify-between rounded-lg">
       <div className="flex gap-2">
         <Image
           src={uri}
@@ -136,7 +136,7 @@ export default function Card({ name, desc }: IBucket) {
                         {name}
                       </h1>
                       <p className="text-md text-gray-400">{desc}</p>
-                      <div className="flex flex-col gap-2 px-3 my-2">
+                      <div className="flex flex-col gap-2 my-2">
                         {tokenDetails.map((token) => {
                           return (
                             <Chips
@@ -147,8 +147,8 @@ export default function Card({ name, desc }: IBucket) {
                           );
                         })}
                       </div>
-                      <div className="flex flex-row items-end justify-center">
-                        <div className="flex w-1/2">
+                      <div className="flex gap-4 flex-row items-end justify-center">
+                        <div className="flex w-3/4">
                           <Input
                             id="amount"
                             name="amount"
@@ -160,7 +160,7 @@ export default function Card({ name, desc }: IBucket) {
                             }}
                           />
                         </div>
-                        <div className="flex w-1/2">
+                        <div className="flex">
                           <button className="flex w-full font=['Roobert'] font-semibold justify-center items-center border border-teal-400 bg-teal-400 hover:bg-teal-500 text-black p-2.5 px-4 rounded-xl">
                             Invest
                           </button>

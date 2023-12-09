@@ -21,7 +21,7 @@ const Input = ({
   value,
 }: IInput) => {
   return (
-    <div>
+    <div className="w-full">
       <label
         htmlFor={id}
         className="text-teal-100 font-['Roobert'] text-md"
