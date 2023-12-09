@@ -48,7 +48,7 @@ export default Input;
 Input.defaultProps = {
   label: "",
   placeholder: "",
-  type: "text",
+  type: "",
 };
 
 Input.propTypes = {
