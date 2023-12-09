@@ -1,20 +1,20 @@
-import ShowBucket from "@/components/showBucket";
-import { mumbaiAddress } from "@/utils/constants";
-import factoryABI from "@/utils/contract/factoryABI.json";
-import Head from "next/head";
-import { useEffect } from "react";
-import { useContractRead } from "wagmi";
+import ShowBucket from '@/components/ShowBucket';
+import { mumbaiAddress } from '@/utils/constants';
+import factoryABI from '@/utils/contract/factoryABI.json';
+import Head from 'next/head';
+import { useEffect } from 'react';
+import { useContractRead } from 'wagmi';
 
 export default function Deposit() {
   const { data } = useContractRead({
     address: mumbaiAddress,
     abi: factoryABI,
-    functionName: "getAllBuckets",
+    functionName: 'getAllBuckets',
     onError: (error) => {
-      console.log("error", error);
+      console.log('error', error);
     },
     onSuccess: (data: any) => {
-      console.log("fetched", data);
+      console.log('fetched', data);
     },
   });
 
@@ -49,9 +49,10 @@ export default function Deposit() {
           Earn and Grow with big buckets 💰
         </h1>
         <div className="flex gap-5 flex-wrap">
-          {data.map((bucket: string, index: number) => {
-            return <ShowBucket key={index} address={bucket} />;
-          })}
+          {data &&
+            data.map((bucket: string, index: number) => {
+              return <ShowBucket key={index} address={bucket} />;
+            })}
         </div>
       </main>
     </>
