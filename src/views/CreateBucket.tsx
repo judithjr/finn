@@ -1,10 +1,11 @@
-import { useState, Fragment, Key } from "react";
+import { useState, Fragment, Key, useEffect } from "react";
 import { useStore } from "@/store";
 import Input from "@/components/form-elements/input";
 import { Listbox, Switch, Transition } from "@headlessui/react";
 import { IoChevronDownOutline } from "react-icons/io5";
 import { FaCheck } from "react-icons/fa6";
 import factoryABI from "@/utils/contract/factoryABI.json";
+import convertArrayToNumbers from "@/utils/converter";
 import {
   useAccount,
   useContractWrite,
@@ -14,21 +15,24 @@ import {
 import { mumbaiAddress, networkOptions, tokenOptions } from "@/utils/constants";
 import Image from "next/image";
 import Chip from "@/components/Chip";
+import getAddresses from "@/utils/getAddresses";
 
 export default function CreateBucket() {
   const [bucketName, setBucketName] = useState("");
   const [bucketDesc, setBucketDesc] = useState("");
   const [isPublic, setIsPublic] = useState(false);
-  const [enabled, setEnabled] = useState(false);
 
   const {
     selectedNetwork,
     setSelectedNetwork,
     selectedTokens,
     setSelectedTokens,
+    proportion,
     setProportion,
   } = useStore();
 
+  const proportionNumbers = convertArrayToNumbers(proportion) ?? [];
+  
   const { config } = usePrepareContractWrite({
     address: mumbaiAddress,
     abi: factoryABI,
@@ -37,11 +41,19 @@ export default function CreateBucket() {
       0,
       isPublic,
       0, //duration
-      [],
-      [100],
-      ["arb"],
+      getAddresses(selectedTokens) ,
+      convertArrayToNumbers(proportion),
+      [''],
       bucketName,
       bucketDesc,
+      // 0,
+      // false,
+      // 1, //duration
+      // ["0xDC62a0f8C6a48A59C65Dd0aA6941E4b96634C2fE"],
+      // [100],
+      // [""],
+      // "bucketName",
+      // "bucketDesc",
     ],
 
     onError: (error) => {
@@ -56,6 +68,11 @@ export default function CreateBucket() {
 
   const { isSuccess } = useWaitForTransaction({ hash: data?.hash });
 
+
+  useEffect(() => {
+   
+  }
+  , [isSuccess])
   return (
     <main className="flex p-5 justify-center items-center">
       <div className="flex flex-col w-[100%] md:w-[30%] gap-4 p-10 border border-gray-400 rounded-2xl">
@@ -220,27 +237,26 @@ export default function CreateBucket() {
         </div>
         <div className="flex flex-row gap-4 font-['Roobert'] p-2 items-center">
           <Switch
-            checked={enabled}
-            onChange={setEnabled}
+            checked={isPublic}
+            onChange={setIsPublic}
             className={`${
-              enabled ? "bg-teal-400" : "bg-neutral-700"
+              isPublic ? "bg-teal-400" : "bg-neutral-700"
             } relative inline-flex h-6 w-11 items-center rounded-full`}
           >
             <span
               className={`${
-                enabled ? "translate-x-6" : "translate-x-1"
+                isPublic ? "translate-x-6" : "translate-x-1"
               } inline-block h-4 w-4 transform rounded-full bg-white transition`}
             />
           </Switch>
-          <span className={`${enabled ? "text-teal-200" : "text-gray-200"}`}>
+          <span className={`${isPublic ? "text-teal-200" : "text-gray-200"}`}>
             Make it public & Earn 💰
           </span>
         </div>
         <div className="flex mt-2 items-center justify-center">
           <button
             onClick={() => {
-              // write?.();
-              console.log("data", selectedTokens);
+              write?.();
             }}
             className="flex flex-row w-full gap-2 font=['Roobert'] font-medium justify-center items-center border border-teal-400 bg-teal-400 hover:bg-teal-500 text-black p-2 px-4 rounded-3xl"
           >

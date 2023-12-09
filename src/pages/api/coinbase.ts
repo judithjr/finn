@@ -35,7 +35,7 @@ export default function handler(
     fromTokenAddress: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913', 
     toTokenAddress: '0x4200000000000000000000000000000000000006', 
     
-    amount: parseUnits('5', 6).toString(),
+    amount: parseUnits('1', 6).toString(),
     walletAddress: makerAddress
   }).then((order) => {
     console.log(order.orderHash);

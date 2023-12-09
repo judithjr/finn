@@ -28,7 +28,7 @@ export default function handler(
     url: 'https://api.1inch.dev/fusion',
     network: NetworkEnum.ARBITRUM,
     blockchainProvider,
-    authKey: 'n5q5QlF5VuAdIxbaZYiCR3wVDjGsxxFe'
+    authKey: 'LwYawtmJTAci1ken3LwCtt0Sc4WEhpTY'
   })
 
   sdk.placeOrder({
