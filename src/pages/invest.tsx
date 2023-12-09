@@ -1,4 +1,4 @@
-import Card from "@/components/card";
+import Card from "@/components/Card";
 import Head from "next/head";
 import { useContractRead, useAccount } from "wagmi";
 import { mumbaiAddress } from "@/utils/constants";
@@ -71,13 +71,13 @@ export default function Deposit() {
     <>
       <Head>
         <title>Invest</title>
-        <meta name="description" content="Create Bucket - Finn" />
+        <meta name="description" content="Invest - Finn" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex flex-col gap-5 p-5 md:p-10 md:px-44 items-center">
         <h1 className="font-['trap'] font-bold text-2xl md:text-3xl text-gray-200">
-          Your buckets
+          Earn and Grow with big buckets 💰
         </h1>
         <div className="flex gap-5 flex-wrap">
           {buckets.map((bucket) => {
