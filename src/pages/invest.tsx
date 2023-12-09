@@ -1,52 +1,24 @@
-import Card from "@/components/Card";
-import Head from "next/head";
-import { useContractRead, useAccount } from "wagmi";
-import { mumbaiAddress } from "@/utils/constants";
-import factoryABI from "@/utils/contract/factoryABI.json";
-import { useEffect, useState } from "react";
+import Head from 'next/head';
+import { useContractRead, useAccount } from 'wagmi';
+import { mumbaiAddress } from '@/utils/constants';
+import factoryABI from '@/utils/contract/factoryABI.json';
+import { useEffect, useState } from 'react';
+import showBucket from '@/components/showBucket';
 
-const buckets = [
-  {
-    id: 1,
-    name: "RWA - 2024",
-    desc: "A case of RWA tokens like Render, tensor",
-  },
-  {
-    id: 2,
-    name: "RWA - 2024",
-    desc: "A case of RWA tokens like Render, tensor",
-  },
-  {
-    id: 3,
-    name: "RWA - 2024",
-    desc: "A case of RWA tokens like Render, tensor",
-  },
-  {
-    id: 4,
-    name: "RWA - 2024",
-    desc: "A case of RWA tokens like Render, tensor",
-  },
-];
-interface bucket {
-  id: string,
-  name: string,
-  desc: string
+interface buckets {
+  address: string[];
 }
 
 export default function Deposit() {
-
-  const [parsedData, setParsedData] = useState<bucket>();
-  const { address } = useAccount();
   const { data } = useContractRead({
     address: mumbaiAddress,
     abi: factoryABI,
-    functionName: "getBucketsByCreator",
-    args: ["0x03EAC4DEB62AAEAA17939f58E46AdA0C81F60AC0"],
+    functionName: 'getAllBuckets',
     onError: (error) => {
-      console.log("error", error);
+      console.log('error', error);
     },
     onSuccess: (data: any) => {
-      console.log("fetched", data);
+      console.log('fetched', data);
     },
   });
 
@@ -54,7 +26,7 @@ export default function Deposit() {
     try {
       if (data.length > 0) {
         for (let index = 0; index < data.length; index++) {
-        console.log(data[index]);          
+          console.log(data[index]);
         }
       }
     } catch (error) {
@@ -80,10 +52,8 @@ export default function Deposit() {
           Earn and Grow with big buckets 💰
         </h1>
         <div className="flex gap-5 flex-wrap">
-          {buckets.map((bucket) => {
-            return (
-              <Card key={bucket.id} name={bucket.name} desc={bucket.desc} />
-            );
+          {data.map((bucket) => {
+            return <showBucket address={bucket} />;
           })}
         </div>
       </main>

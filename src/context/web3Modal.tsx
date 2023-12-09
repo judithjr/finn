@@ -1,7 +1,7 @@
 import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi/react';
 
 import { WagmiConfig } from 'wagmi';
-import { arbitrum, base, mainnet, polygonMumbai } from 'viem/chains';
+import { arbitrum, base, mainnet, polygon, polygonMumbai } from 'viem/chains';
 
 // 1. Get projectId at https://cloud.walletconnect.com
 const projectId = '33e28c5d43009b3668cccf62984e6dbe';
@@ -14,7 +14,7 @@ const metadata = {
   icons: ['https://avatars.githubusercontent.com/u/37784886'],
 };
 
-const chains = [arbitrum, base, polygonMumbai];
+const chains = [arbitrum, base, polygon];
 const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata });
 
 // 3. Create modal
