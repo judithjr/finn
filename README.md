@@ -1,40 +1,44 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Finn
+Finn is a Web3 version of smallcase with token investment UX improvement in the DeFi space. Instead of micro-management of the portfolio, we provide a simple interface to create a bucket of tokens and invest in them in a single transaction. Consider it as mutual funds where the deposited amount will be invested in tokens with respective allocations. Later, it can be withdrawn according to the current market price. Choose better PNL doing buckets, invest, and grow with strategies!
 
-## Getting Started
+### How do we use 1inch?
+Using `1inch Fusion API`, we are swapping the investment into prospective token allocation on `Arbitrum One` and `Base` mainnets. Later, it is used to withdraw the funds from the bucket. 
 
-First, run the development server:
+## Prerequisites & Manual Setup
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Every user must have a Metamask wallet to interact with this product. Check out how to create a Metamask wallet from [here](https://metamask.io). 
+
+Follow the instructions for the local environment: The user must have Node.js and npm to run this platform. Just download Node.js from [here](https://nodejs.org/en/download/).
+
+### Local Setup Instructions
+
+**Clone the repo via CLI:**
+
+```sh
+git clone https://github.com/neel-ds/finn.git 
+cd finn
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**Install the required packages:**
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+```sh
+npm install
+yarn install   #or
+pnpm install   #or
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+**Add required environment variables mentioned in `.env.example` file**
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```sh
+touch .env  #Paste env variables in this file and your values
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+**In the project directory, you can run:**
 
-## Learn More
+```sh
+npm run dev
+yarn dev   #or
+pnpm dev   #or
+```
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
