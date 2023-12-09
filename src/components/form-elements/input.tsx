@@ -21,7 +21,7 @@ const Input = ({
   value,
 }: IInput) => {
   return (
-    <div>
+    <div className="w-full">
       <label
         htmlFor={id}
         className="text-teal-100 font-['Roobert'] text-md"
@@ -48,7 +48,7 @@ export default Input;
 Input.defaultProps = {
   label: "",
   placeholder: "",
-  type: "text",
+  type: "",
 };
 
 Input.propTypes = {

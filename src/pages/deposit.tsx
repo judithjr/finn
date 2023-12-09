@@ -1,4 +1,4 @@
-import Card from "@/components/card";
+import Card from "@/components/Card";
 import Head from "next/head";
 import { useContractRead, useAccount } from "wagmi";
 import { mumbaiAddress } from "@/utils/constants";
