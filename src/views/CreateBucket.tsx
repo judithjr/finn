@@ -1,26 +1,31 @@
-import { useState, Fragment, Key, useEffect } from "react";
-import { useStore } from "@/store";
-import Input from "@/components/form-elements/input";
-import { Listbox, Switch, Transition } from "@headlessui/react";
-import { IoChevronDownOutline } from "react-icons/io5";
-import { FaCheck } from "react-icons/fa6";
-import factoryABI from "@/utils/contract/factoryABI.json";
-import convertArrayToNumbers from "@/utils/converter";
+import { useState, Fragment, Key, useEffect } from 'react';
+import { useStore } from '@/store';
+import Input from '@/components/form-elements/input';
+import { Listbox, Switch, Transition } from '@headlessui/react';
+import { IoChevronDownOutline } from 'react-icons/io5';
+import { FaCheck } from 'react-icons/fa6';
+import factoryABI from '@/utils/contract/factoryABI.json';
+import convertArrayToNumbers from '@/utils/converter';
 import {
   useAccount,
   useContractWrite,
   usePrepareContractWrite,
   useWaitForTransaction,
-} from "wagmi";
-import { mumbaiAddress, networkOptions, tokenOptions } from "@/utils/constants";
-import Image from "next/image";
-import Chip from "@/components/Chip";
-import getAddresses from "@/utils/getAddresses";
+} from 'wagmi';
+import { mumbaiAddress, networkOptions, tokenOptions } from '@/utils/constants';
+import Image from 'next/image';
+import Chip from '@/components/Chip';
+import getAddresses from '@/utils/getAddresses';
 
 export default function CreateBucket() {
-  const [bucketName, setBucketName] = useState("");
-  const [bucketDesc, setBucketDesc] = useState("");
-  const [isPublic, setIsPublic] = useState(false);
+  const {
+    bucketName,
+    bucketDesc,
+    isPublic,
+    setBucketName,
+    setBucketDesc,
+    setIsPublic,
+  } = useStore();
 
   const {
     selectedNetwork,
@@ -32,16 +37,16 @@ export default function CreateBucket() {
   } = useStore();
 
   const proportionNumbers = convertArrayToNumbers(proportion) ?? [];
-  
+
   const { config } = usePrepareContractWrite({
     address: mumbaiAddress,
     abi: factoryABI,
-    functionName: "createBucket",
+    functionName: 'createBucket',
     args: [
       0,
       isPublic,
       0, //duration
-      getAddresses(selectedTokens) ,
+      getAddresses(selectedTokens),
       convertArrayToNumbers(proportion),
       [''],
       bucketName,
@@ -57,10 +62,10 @@ export default function CreateBucket() {
     ],
 
     onError: (error) => {
-      console.log("Error", error);
+      console.log('Error', error);
     },
     onSuccess: (result) => {
-      console.log("Success", result);
+      console.log('Success', result);
     },
   });
 
@@ -68,11 +73,7 @@ export default function CreateBucket() {
 
   const { isSuccess } = useWaitForTransaction({ hash: data?.hash });
 
-
-  useEffect(() => {
-   
-  }
-  , [isSuccess])
+  useEffect(() => {}, [isSuccess]);
   return (
     <main className="flex p-5 justify-center items-center">
       <div className="flex flex-col w-[100%] md:w-[30%] gap-4 p-10 border border-gray-400 rounded-2xl">
@@ -132,8 +133,8 @@ export default function CreateBucket() {
                     className={({ active }) =>
                       `relative cursor-default select-none py-2 pl-10 pr-4 ${
                         active
-                          ? "bg-neutral-900 text-teal-300"
-                          : "text-gray-200"
+                          ? 'bg-neutral-900 text-teal-300'
+                          : 'text-gray-200'
                       }`
                     }
                     value={network}
@@ -142,7 +143,7 @@ export default function CreateBucket() {
                       <>
                         <span
                           className={`block truncate ${
-                            selected ? "font-medium" : "font-normal"
+                            selected ? 'font-medium' : 'font-normal'
                           }`}
                         >
                           {network.name}
@@ -175,7 +176,7 @@ export default function CreateBucket() {
           <div className="relative -mt-3">
             <Listbox.Button className="relative w-full cursor-default rounded-lg font-['Roobert'] text-gray-200 bg-neutral-800 py-3 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
               <span className="block truncate">
-                {selectedTokens.map((token) => token.name).join(", ")}
+                {selectedTokens.map((token) => token.name).join(', ')}
               </span>
               <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                 <IoChevronDownOutline
@@ -197,8 +198,8 @@ export default function CreateBucket() {
                     className={({ active }) =>
                       `relative cursor-default select-none py-2 pl-10 pr-4 ${
                         active
-                          ? "bg-neutral-900 text-teal-300"
-                          : "text-gray-200"
+                          ? 'bg-neutral-900 text-teal-300'
+                          : 'text-gray-200'
                       }`
                     }
                     value={token}
@@ -207,7 +208,7 @@ export default function CreateBucket() {
                       <>
                         <span
                           className={`block truncate ${
-                            selected ? "font-medium" : "font-normal"
+                            selected ? 'font-medium' : 'font-normal'
                           }`}
                         >
                           {token.name}
@@ -240,16 +241,16 @@ export default function CreateBucket() {
             checked={isPublic}
             onChange={setIsPublic}
             className={`${
-              isPublic ? "bg-teal-400" : "bg-neutral-700"
+              isPublic ? 'bg-teal-400' : 'bg-neutral-700'
             } relative inline-flex h-6 w-11 items-center rounded-full`}
           >
             <span
               className={`${
-                isPublic ? "translate-x-6" : "translate-x-1"
+                isPublic ? 'translate-x-6' : 'translate-x-1'
               } inline-block h-4 w-4 transform rounded-full bg-white transition`}
             />
           </Switch>
-          <span className={`${isPublic ? "text-teal-200" : "text-gray-200"}`}>
+          <span className={`${isPublic ? 'text-teal-200' : 'text-gray-200'}`}>
             Make it public & Earn 💰
           </span>
         </div>
