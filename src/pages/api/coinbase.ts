@@ -33,7 +33,7 @@ export default function handler(
 
   sdk.placeOrder({
     fromTokenAddress: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913', //USDC
-    toTokenAddress: '0x4200000000000000000000000000000000000006',  
+    toTokenAddress: '0x4200000000000000000000000000000000000006',  //WETH
     amount: parseUnits('6', 6).toString(),
     walletAddress: makerAddress
   }).then((order) => {

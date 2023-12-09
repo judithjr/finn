@@ -41,7 +41,7 @@ export default function Deposit() {
     address: mumbaiAddress,
     abi: factoryABI,
     functionName: "getBucketsByCreator",
-    args: ["0x75c3C41f7D6504bB843a2b5eBbC62603901D2052"],
+    args: [address],
     onError: (error) => {
       console.log("error", error);
     },
