@@ -1,5 +1,11 @@
 import Card from "@/components/card";
 import Head from "next/head";
+import { useContractRead, useAccount } from "wagmi";
+import { mumbaiAddress } from "@/utils/constants";
+import factoryABI from "@/utils/contract/factoryABI.json";
+import finnABI from "@/utils/contract/finnABI.json";
+import { useEffect, useState } from "react";
+import {ethers} from "ethers";
 
 const buckets = [
   {
@@ -23,8 +29,49 @@ const buckets = [
     desc: "A case of RWA tokens like Render, tensor",
   },
 ];
+interface bucket {
+  id: string,
+  name: string,
+  desc: string
+}
 
 export default function Deposit() {
+
+  const [parsedData, setParsedData] = useState<bucket>();
+  const { address } = useAccount();
+  const { data } = useContractRead({
+    address: mumbaiAddress,
+    abi: factoryABI,
+    functionName: "getBucketsByCreator",
+    args: ["0x75c3C41f7D6504bB843a2b5eBbC62603901D2052"],
+    onError: (error) => {
+      console.log("error", error);
+    },
+    onSuccess: (data: any) => {
+      console.log("fetched", data);
+    },
+  });
+
+  const fetchData = async () => {
+    try {
+      if (data.length > 0) {
+        for (let index = 0; index < data.length; index++) {
+        console.log(data[index]);
+         
+         ethers.co
+          
+        }
+      }
+    } catch (error) {
+      return {
+        notFound: true,
+      };
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [data]);
   return (
     <>
       <Head>
