@@ -80,7 +80,7 @@ export default function Hero() {
           Top features
         </h1>
       </div>
-      <div className="flex flex-wrap px-44">
+      <div className="flex flex-wrap md:px-44">
         {cardData.map((card) => (
           <Card
             key={card.id}
