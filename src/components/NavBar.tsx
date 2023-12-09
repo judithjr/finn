@@ -142,20 +142,6 @@ const Navbar = () => {
                           </Link>
                         )}
                       </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <Link
-                            href={"/portfolio"}
-                            className={`${
-                              active
-                                ? "bg-violet-500 text-white"
-                                : "text-gray-900"
-                            } group flex w-full items-center rounded-md px-2 py-2 text-md md:text-sm`}
-                          >
-                            Portfolio
-                          </Link>
-                        )}
-                      </Menu.Item>
                     </div>
                   </Menu.Items>
                 </Transition>

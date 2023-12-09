@@ -70,8 +70,8 @@ export default function Deposit() {
   return (
     <>
       <Head>
-        <title>Invest</title>
-        <meta name="description" content="Create Bucket - Finn" />
+        <title>Your bucket</title>
+        <meta name="description" content="Bucket - Finn" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
