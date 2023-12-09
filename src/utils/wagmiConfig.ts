@@ -1,5 +1,5 @@
-import { configureChains, createConfig } from 'wagmi';
-import { arbitrum, base, polygonMumbai } from 'wagmi/chains';
+import { configureChains, createConfig } from "wagmi";
+import { arbitrum, base, polygonMumbai } from "wagmi/chains";
 import {
   EthereumClient,
   w3mConnectors,

@@ -15,12 +15,6 @@ type TokenOptions = TokenOption[][]
 
 const ARB: TokenOption[] = [
     {
-        name: "ARB",
-        contractAddress: "0x912ce59144191c1204e64559fe8253a0e49e6548",
-        logoURI:
-            "https://tokens.1inch.io/0xb50721bcf8d664c30412cfbc6cf7a15145234ad1.png",
-    },
-    {
         name: "WETH",
         contractAddress: "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
         logoURI:
@@ -64,12 +58,6 @@ const BASE: TokenOption[] = [
         contractAddress: "0x4200000000000000000000000000000000000006",
         logoURI:
             "https://tokens.1inch.io/0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2.png",
-    },
-    {
-        name: "BASE",
-        contractAddress: "0x0bf0ba3962a189d56f358143f38b7ffd26b8d48f",
-        logoURI:
-            "https://tokens.1inch.io/0x07150e919b4de5fd6a63de1f9384828396f25fdc.png",
     },
     {
         name: "DAI",
