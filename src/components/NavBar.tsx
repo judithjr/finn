@@ -1,8 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { useRouter } from "next/router";
+import { Menu, Transition } from "@headlessui/react";
+import { IoChevronDownOutline } from "react-icons/io5";
 
 const Navbar = () => {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
@@ -38,9 +40,7 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`navbar fixed z-10 w-full mx-auto px-2 sm:px-4 py-3 rounded drop-shadow-md ${navbarBg} ${
-          isOpenMenu ? "bg-[#161616]" : "bg-transparent"
-        } bg-opacity-90`}
+        className={`navbar fixed z-10 w-full mx-auto px-2 sm:px-4 py-3 rounded drop-shadow-md ${navbarBg} font-['Roobert'] bg-opacity-90`}
       >
         <div className="max-w-[1080px] container flex flex-wrap justify-between items-center mx-auto">
           <Link href="/" className="flex items-center flex-1">
@@ -72,7 +72,7 @@ const Navbar = () => {
               isOpenMenu ? "block" : "hidden"
             } justify-between items-center w-full md:flex md:w-auto md:order-1`}
           >
-            <ul className="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
+            <ul className="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-md md:font-medium">
               <li></li>
               <li>
                 <Link
@@ -107,58 +107,59 @@ const Navbar = () => {
                   Invest
                 </Link>
               </li>
-              <li>
-                <button
-                  id="dropdownNavbarLink"
-                  onClick={toggleDropdown}
-                  className="flex items-center justify-between w-full py-2 px-3 text-gray-200 rounded md:hover:bg-transparent md:border-0 md:hover:text-teal-400 md:p-0 md:w-auto "
-                >
-                  Profile{" "}
-                  <svg
-                    className="w-2.5 h-2.5 ms-2.5"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 10 6"
-                  >
-                    <path
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="m1 1 4 4 4-4"
+              <Menu as="div" className="relative inline-block w-full text-left">
+                <div>
+                  <Menu.Button className="inline-flex w-full items-center py-2 pr-4 pl-3 text-neutral-300 hover:text-teal-400 border-b border-neutral-400 hover:bg-neutral-800 md:hover:bg-transparent md:border-0 md:hover:font-bold md:p-0">
+                    Profile
+                    <IoChevronDownOutline
+                      className="-mr-1 ml-2 h-5 w-5"
+                      aria-hidden="true"
                     />
-                  </svg>
-                </button>
-                <div
-                  id="dropdownNavbar"
-                  className={`z-10 ${
-                    isDropdownVisible ? "" : "hidden"
-                  } absolute font-normal bg-neutral-800 rounded-lg shadow w-44`}
-                >
-                  <ul
-                    className="py-2 text-sm text-gray-200"
-                    aria-labelledby="dropdownLargeButton"
-                  >
-                    <li>
-                      <Link
-                        href="/bucket"
-                        className="block px-4 py-2 text-gray-200 hover:bg-neutral-700 hover:text-teal-400"
-                      >
-                        Your buckets
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href="/portfolio"
-                        className="block px-4 py-2 text-gray-200 hover:bg-neutral-700 hover:text-teal-400"
-                      >
-                        Portfolio
-                      </Link>
-                    </li>
-                  </ul>
+                  </Menu.Button>
                 </div>
-              </li>
+                <Transition
+                  as={Fragment}
+                  enter="transition ease-out duration-100"
+                  enterFrom="transform opacity-0 scale-95"
+                  enterTo="transform opacity-100 scale-100"
+                  leave="transition ease-in duration-75"
+                  leaveFrom="transform opacity-100 scale-100"
+                  leaveTo="transform opacity-0 scale-95"
+                >
+                  <Menu.Items className="relative md:absolute right-0 mt-2 w-72 md:w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
+                    <div className="px-1 py-1 ">
+                      <Menu.Item>
+                        {({ active }) => (
+                          <Link
+                            href={"/bucket"}
+                            className={`${
+                              active
+                                ? "bg-violet-500 text-white"
+                                : "text-gray-900"
+                            } group flex w-full items-center rounded-md px-2 py-2 md:text-sm text-md`}
+                          >
+                            Your bucket
+                          </Link>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <Link
+                            href={"/portfolio"}
+                            className={`${
+                              active
+                                ? "bg-violet-500 text-white"
+                                : "text-gray-900"
+                            } group flex w-full items-center rounded-md px-2 py-2 text-md md:text-sm`}
+                          >
+                            Portfolio
+                          </Link>
+                        )}
+                      </Menu.Item>
+                    </div>
+                  </Menu.Items>
+                </Transition>
+              </Menu>
             </ul>
           </div>
         </div>
