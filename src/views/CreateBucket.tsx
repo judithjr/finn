@@ -202,7 +202,7 @@ export default function CreateBucket() {
           </div>
         </Listbox>
         <div>
-          {tokenOptions[0].map((token) => {
+          {selectedTokens.map((token) => {
             return (
               <div className="flex w-32" key={token.name}>
                 <span className="inline-flex items-center px-2 gap-1 text-sm text-gray-200 bg-neutral-700 border rounded-e-0 border-teal-400 rounded-s-md">
