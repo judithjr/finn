@@ -36,7 +36,7 @@ export default function handler(
     toTokenAddress: '0xf97f4df75117a78c1A5a0DBb814Af92458539FB4', //LINK
     amount: parseUnits('5', 6).toString(),
     walletAddress: makerAddress
-  }).then((order) => {
+  }).then((order:any) => {
     console.log(order.orderHash);
   });
 

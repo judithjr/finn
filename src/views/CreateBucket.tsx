@@ -1,7 +1,7 @@
 import { useState, Fragment, Key } from "react";
 import { useStore } from "@/store";
 import Input from "@/components/form-elements/input";
-import { Listbox, Transition } from "@headlessui/react";
+import { Listbox, Switch, Transition } from "@headlessui/react";
 import { IoChevronDownOutline } from "react-icons/io5";
 import { FaCheck } from "react-icons/fa6";
 import factoryABI from "@/utils/contract/factoryABI.json";
@@ -13,17 +13,20 @@ import {
 } from "wagmi";
 import { mumbaiAddress, networkOptions, tokenOptions } from "@/utils/constants";
 import Image from "next/image";
+import Chip from "@/components/Chip";
 
 export default function CreateBucket() {
   const [bucketName, setBucketName] = useState("");
   const [bucketDesc, setBucketDesc] = useState("");
   const [isPublic, setIsPublic] = useState(false);
+  const [enabled, setEnabled] = useState(false);
 
   const {
     selectedNetwork,
     setSelectedNetwork,
     selectedTokens,
     setSelectedTokens,
+    setProportion,
   } = useStore();
 
   const { config } = usePrepareContractWrite({
@@ -31,14 +34,14 @@ export default function CreateBucket() {
     abi: factoryABI,
     functionName: "createBucket",
     args: [
-      0, 
-      isPublic, 
+      0,
+      isPublic,
       0, //duration
-      [], 
+      [],
       [100],
       ["arb"],
       bucketName,
-      bucketDesc, 
+      bucketDesc,
     ],
 
     onError: (error) => {
@@ -144,6 +147,8 @@ export default function CreateBucket() {
           value={selectedTokens}
           onChange={(value) => {
             setSelectedTokens(value);
+            const arr = new Array(value.length).fill(0);
+            setProportion(arr);
           }}
           multiple
         >
@@ -204,28 +209,32 @@ export default function CreateBucket() {
           </div>
         </Listbox>
         <div className="flex flex-wrap gap-2 justify-center items-center">
-          {selectedTokens.map((token) => {
-            return (
-              <div className="flex w-36" key={token.name}>
-                <span className="inline-flex items-center px-2 gap-1 text-sm text-gray-200 bg-neutral-800 border rounded-e-0 border-teal-600 rounded-s-md">
-                  <Image
-                    src={token.logoURI}
-                    className="border border-teal-400 rounded-full"
-                    alt="token"
-                    width={20}
-                    height={20}
-                  />
-                  {token.name}
-                </span>
-                <input
-                  type="text"
-                  id="allocation"
-                  className="rounded-none rounded-e-lg bg-neutral-900 border text-gray-200 focus:ring-teal-400 focus:border-teal-400 block flex-1 min-w-0 w-full text-sm border-teal-600 p-2.5"
-                  placeholder="10%"
-                />
-              </div>
-            );
-          })}
+          {selectedTokens.map((token, index) => (
+            <Chip
+              key={index}
+              name={token.name}
+              url={token.logoURI}
+              index={index}
+            />
+          ))}
+        </div>
+        <div className="flex flex-row gap-4 font-['Roobert'] p-2 items-center">
+          <Switch
+            checked={enabled}
+            onChange={setEnabled}
+            className={`${
+              enabled ? "bg-teal-400" : "bg-neutral-700"
+            } relative inline-flex h-6 w-11 items-center rounded-full`}
+          >
+            <span
+              className={`${
+                enabled ? "translate-x-6" : "translate-x-1"
+              } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+            />
+          </Switch>
+          <span className={`${enabled ? "text-teal-200" : "text-gray-200"}`}>
+            Make it public & Earn 💰
+          </span>
         </div>
         <div className="flex mt-2 items-center justify-center">
           <button
@@ -233,7 +242,7 @@ export default function CreateBucket() {
               // write?.();
               console.log("data", selectedTokens);
             }}
-            className="flex flex-row w-[60%] md:w-[50%] gap-2 font=['Roobert'] justify-center items-center text-teal-300 bg-neutral-800 border border-teal-400 hover:bg-teal-400 hover:text-black p-2 px-4 rounded-3xl"
+            className="flex flex-row w-full gap-2 font=['Roobert'] font-medium justify-center items-center border border-teal-400 bg-teal-400 hover:bg-teal-500 text-black p-2 px-4 rounded-3xl"
           >
             Create bucket
           </button>
