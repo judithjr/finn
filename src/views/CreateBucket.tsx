@@ -1,21 +1,13 @@
-import { useState, Fragment, Key, useEffect } from 'react';
+import { Fragment } from 'react';
 import { useStore } from '@/store';
 import Input from '@/components/form-elements/input';
 import { Listbox, Switch, Transition } from '@headlessui/react';
 import { IoChevronDownOutline } from 'react-icons/io5';
 import { FaCheck } from 'react-icons/fa6';
-import factoryABI from '@/utils/contract/factoryABI.json';
 import convertArrayToNumbers from '@/utils/converter';
-import {
-  useAccount,
-  useContractWrite,
-  usePrepareContractWrite,
-  useWaitForTransaction,
-} from 'wagmi';
-import { mumbaiAddress, networkOptions, tokenOptions } from '@/utils/constants';
-import Image from 'next/image';
+import {  networkOptions, tokenOptions } from '@/utils/constants';
 import Chip from '@/components/Chip';
-import getAddresses from '@/utils/getAddresses';
+import useCreateBucket from '@/hooks/useCreateBucket';
 
 export default function CreateBucket() {
   const {
@@ -25,9 +17,6 @@ export default function CreateBucket() {
     setBucketName,
     setBucketDesc,
     setIsPublic,
-  } = useStore();
-
-  const {
     selectedNetwork,
     setSelectedNetwork,
     selectedTokens,
@@ -36,44 +25,7 @@ export default function CreateBucket() {
     setProportion,
   } = useStore();
 
-  const proportionNumbers = convertArrayToNumbers(proportion) ?? [];
-
-  const { config } = usePrepareContractWrite({
-    address: mumbaiAddress,
-    abi: factoryABI,
-    functionName: 'createBucket',
-    args: [
-      0,
-      isPublic,
-      0, //duration
-      getAddresses(selectedTokens),
-      convertArrayToNumbers(proportion),
-      [''],
-      bucketName,
-      bucketDesc,
-      // 0,
-      // false,
-      // 1, //duration
-      // ["0xDC62a0f8C6a48A59C65Dd0aA6941E4b96634C2fE"],
-      // [100],
-      // [""],
-      // "bucketName",
-      // "bucketDesc",
-    ],
-
-    onError: (error) => {
-      console.log('Error', error);
-    },
-    onSuccess: (result) => {
-      console.log('Success', result);
-    },
-  });
-
-  const { data, write, error } = useContractWrite(config);
-
-  const { isSuccess } = useWaitForTransaction({ hash: data?.hash });
-
-  useEffect(() => {}, [isSuccess]);
+  const { createBucket } = useCreateBucket();  
   return (
     <main className="flex p-5 justify-center items-center">
       <div className="flex flex-col w-[100%] md:w-[30%] gap-4 p-10 border border-gray-400 rounded-2xl">
@@ -257,7 +209,7 @@ export default function CreateBucket() {
         <div className="flex mt-2 items-center justify-center">
           <button
             onClick={() => {
-              write?.();
+             createBucket();
             }}
             className="flex flex-row w-full gap-2 font=['Roobert'] font-medium justify-center items-center border border-teal-400 bg-teal-400 hover:bg-teal-500 text-black p-2 px-4 rounded-3xl"
           >
