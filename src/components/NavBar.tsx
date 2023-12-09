@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { AiOutlineMenu } from "react-icons/ai";
+import { HiMenuAlt3 } from "react-icons/hi";
 import { useRouter } from "next/router";
 import { Web3Button } from "@web3modal/react";
 
@@ -17,7 +17,7 @@ const Navbar = () => {
       const triggerHeight = 50;
 
       if (scrollY > triggerHeight) {
-        setNavbarBg("bg-white");
+        setNavbarBg("bg-black");
         setDividerDisabled(true);
       } else {
         setNavbarBg("bg-transparent");
@@ -35,7 +35,7 @@ const Navbar = () => {
     <>
       <nav
         className={`navbar fixed z-10 w-full mx-auto px-2 sm:px-4 py-3 rounded drop-shadow-md ${navbarBg} ${
-          isOpenMenu ? "bg-white" : "bg-transparent"
+          isOpenMenu ? "bg-[#161616]" : "bg-transparent"
         } bg-opacity-90`}
       >
         <div className="max-w-[1080px] container flex flex-wrap justify-between items-center mx-auto">
@@ -56,11 +56,11 @@ const Navbar = () => {
             <button
               data-collapse-toggle="mobile-menu-4"
               type="button"
-              className="ml-2 md:ml-0 inline-flex items-center py-2 px-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+              className="ml-2 md:ml-0 inline-flex items-center py-2 px-3 text-sm text-gray-300 rounded-lg md:hidden hover:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-gray-400"
               onClick={() => setIsOpenMenu(!isOpenMenu)}
             >
               <span className="sr-only">Open main menu</span>
-              <AiOutlineMenu size="20" />
+              <HiMenuAlt3 size="25" />
             </button>
           </div>
           <div
@@ -75,7 +75,7 @@ const Navbar = () => {
                   href="/"
                   className={`${
                     pathname === "/" ? "underline" : ""
-                  } block underline-offset-4 py-2 pr-4 pl-3 text-neutral-300 hover:text-teal-400 border-b border-neutral-400 hover:bg-neutral-200 md:hover:bg-transparent md:border-0 md:hover:font-bold md:p-0`}
+                  } block underline-offset-4 py-2 pr-4 pl-3 text-neutral-300 hover:text-teal-400 border-b border-neutral-400 hover:bg-neutral-800 md:hover:bg-transparent md:border-0 md:hover:font-bold md:p-0`}
                   aria-current="page"
                 >
                   Home
@@ -86,7 +86,7 @@ const Navbar = () => {
                   href="/bucket"
                   className={`${
                     pathname === "/bucket" ? "underline" : ""
-                  } block underline-offset-4 py-2 pr-4 pl-3 text-neutral-300 hover:text-teal-400 border-b border-neutral-400 hover:bg-neutral-200 md:hover:bg-transparent md:border-0 md:hover:font-bold md:p-0`}
+                  } block underline-offset-4 py-2 pr-4 pl-3 text-neutral-300 hover:text-teal-400 border-b border-neutral-400 hover:bg-neutral-800 md:hover:bg-transparent md:border-0 md:hover:font-bold md:p-0`}
                   aria-current="page"
                 >
                   Bucket
@@ -97,7 +97,7 @@ const Navbar = () => {
                   href="/deposit"
                   className={`${
                     pathname === "/deposit" ? "underline" : ""
-                  } block underline-offset-4 py-2 pr-4 pl-3 text-neutral-300 hover:text-teal-400 border-b border-neutral-400 hover:bg-neutral-200 md:hover:bg-transparent md:border-0 md:hover:font-bold md:p-0`}
+                  } block underline-offset-4 py-2 pr-4 pl-3 text-neutral-300 hover:text-teal-400 border-b border-neutral-400 hover:bg-neutral-800 md:hover:bg-transparent md:border-0 md:hover:font-bold md:p-0`}
                   aria-current="page"
                 >
                   Deposit
@@ -108,7 +108,7 @@ const Navbar = () => {
                   href="/faq"
                   className={`${
                     pathname === "faq" ? "underline" : ""
-                  } block underline-offset-4 py-2 pr-4 pl-3 text-neutral-300 hover:text-teal-400 border-b border-neutral-400 hover:bg-neutral-200 md:hover:bg-transparent md:border-0 md:hover:font-bold md:p-0`}
+                  } block underline-offset-4 py-2 pr-4 pl-3 text-neutral-300 hover:text-teal-400 border-b border-neutral-400 hover:bg-neutral-800 md:hover:bg-transparent md:border-0 md:hover:font-bold md:p-0`}
                   aria-current="page"
                 >
                   FAQ

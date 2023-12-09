@@ -15,24 +15,25 @@ export default function handler(
   const makerPrivateKey = 'd57b597a6575bcfad10a7fbbb53575250db37c9c3514cce86af8e40b0e6d6a83'
   const makerAddress = '0x03EAC4DEB62AAEAA17939f58E46AdA0C81F60AC0';
 
-  const nodeUrl = 'https://base.llamarpc.com';
+  const nodeUrl = 'https://arb1.arbitrum.io/rpc';
+
+  const web3Instance = new Web3(nodeUrl);
 
   const blockchainProvider = new PrivateKeyProviderConnector(
     makerPrivateKey,
-    new Web3(nodeUrl)
+    web3Instance as any
   )
 
   const sdk = new FusionSDK({
     url: 'https://api.1inch.dev/fusion',
-    network: NetworkEnum.COINBASE,
+    network: NetworkEnum.ARBITRUM,
     blockchainProvider,
     authKey: 'n5q5QlF5VuAdIxbaZYiCR3wVDjGsxxFe'
   })
 
   sdk.placeOrder({
-    fromTokenAddress: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913', 
-    toTokenAddress: '0x4200000000000000000000000000000000000006', 
-    
+    fromTokenAddress: '0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9', //USDT
+    toTokenAddress: '0xf97f4df75117a78c1A5a0DBb814Af92458539FB4', //LINK
     amount: parseUnits('5', 6).toString(),
     walletAddress: makerAddress
   }).then((order) => {
