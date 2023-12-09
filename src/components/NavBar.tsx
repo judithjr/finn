@@ -87,9 +87,9 @@ const Navbar = () => {
               </li>
               <li>
                 <Link
-                  href="/bucket"
+                  href="/create"
                   className={`${
-                    pathname === "/bucket" ? "underline" : ""
+                    pathname === "/create" ? "underline" : ""
                   } block underline-offset-4 py-2 pr-4 pl-3 text-neutral-300 hover:text-teal-400 border-b border-neutral-400 hover:bg-neutral-800 md:hover:bg-transparent md:border-0 md:hover:font-bold md:p-0`}
                   aria-current="page"
                 >
