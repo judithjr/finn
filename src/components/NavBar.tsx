@@ -38,9 +38,7 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`navbar fixed z-10 w-full mx-auto px-2 sm:px-4 py-3 rounded drop-shadow-md ${navbarBg} ${
-          isOpenMenu ? "bg-[#161616]" : "bg-transparent"
-        } bg-opacity-90`}
+        className={`navbar fixed z-10 w-full mx-auto px-2 sm:px-4 py-3 rounded drop-shadow-md ${navbarBg} bg-opacity-90`}
       >
         <div className="max-w-[1080px] container flex flex-wrap justify-between items-center mx-auto">
           <Link href="/" className="flex items-center flex-1">
