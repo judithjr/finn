@@ -1,4 +1,5 @@
 import { useState, Fragment } from "react";
+import { useStore } from "@/store";
 import Input from "@/components/form-elements/input";
 import { Listbox, Transition } from "@headlessui/react";
 import { IoChevronDownOutline } from "react-icons/io5";
@@ -10,20 +11,75 @@ import {
   usePrepareContractWrite,
   useWaitForTransaction,
 } from "wagmi";
-import {mumbaiAddress} from "@/utils/constants";
+import { mumbaiAddress } from "@/utils/constants";
 
-const networkOptions = [
-  { name: "Arbitrum", value: "Arbitrum" },
-  { name: "Base", value: "Base" },
+const networkOptions = ["Arbitrum", "Base"];
+const tokenOptions = [
+  [
+    {
+      name: "ARB",
+      value: "0x912ce59144191c1204e64559fe8253a0e49e6548",
+      unavailable: false,
+    },
+    {
+      name: "WETH",
+      value: "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+      unavailable: false,
+    },
+    {
+      name: "WBTC",
+      value: "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f",
+      unavailable: false,
+    },
+    {
+      name: "DAI",
+      value: "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+      unavailable: false,
+    },
+    {
+      name: "LINK",
+      value: "0xf97f4df75117a78c1a5a0dbb814af92458539fb4",
+      unavailable: false,
+    },
+    {
+      name: "ETH",
+      value: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      unavailable: false,
+    },
+  ],
+  [
+    {
+      name: "ETH",
+      value: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      unavailable: false,
+    },
+    {
+      name: "WETH",
+      value: "0x4200000000000000000000000000000000000006",
+      unavailable: false,
+    },
+    {
+      name: "BASE",
+      value: "0x0bf0ba3962a189d56f358143f38b7ffd26b8d48f",
+      unavailable: false,
+    },
+    {
+      name: "DAI",
+      value: "0x50c5725949a6f0c72e6c4a641f24049a917db0cb",
+      unavailable: false,
+    },
+  ],
 ];
 
 export default function CreateBucket() {
   const [bucketName, setBucketName] = useState("");
   const [bucketDesc, setBucketDesc] = useState("");
   const [network, setNetwork] = useState(networkOptions[0]);
+  const [token, setToken] = useState(tokenOptions[0]);
+  const { selectedNetwork, setSelectedNetwork } = useStore();
 
   const { config } = usePrepareContractWrite({
-    address:mumbaiAddress ,
+    address: mumbaiAddress,
     abi: factoryABI,
     functionName: "createBucket",
     args: [
@@ -32,7 +88,7 @@ export default function CreateBucket() {
       10, //locked time duration,
       ["0x2da724Bf044a7a0eb2e427ba35E3cD65B91C8beF"], //token addresses,
       [100],
-      ["arb"] ,//token weights,
+      ["arb"], //token weights,
       "bucketName", //name,
       "bucketDesc", //description,
     ],
@@ -74,13 +130,18 @@ export default function CreateBucket() {
             setBucketDesc(e.target.value);
           }}
         />
-        <Listbox value={network} onChange={setNetwork}>
+        <Listbox
+          value={network}
+          onChange={() => {
+            setNetwork;
+          }}
+        >
           <label className="text-teal-100 font-['Roobert'] text-md">
             Select Network
           </label>
           <div className="relative -mt-3">
             <Listbox.Button className="relative w-full cursor-default rounded-lg font-['Roobert'] text-gray-200 bg-neutral-700 py-3 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
-              <span className="block truncate">{network.name}</span>
+              <span className="block truncate">{network}</span>
               <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                 <IoChevronDownOutline
                   className="h-5 w-5 text-gray-200"
@@ -114,7 +175,7 @@ export default function CreateBucket() {
                             selected ? "font-medium" : "font-normal"
                           }`}
                         >
-                          {network.name}
+                          {network}
                         </span>
                         {selected ? (
                           <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-teal-400">
@@ -129,14 +190,72 @@ export default function CreateBucket() {
             </Transition>
           </div>
         </Listbox>
+        {/* {network && network === "Arbitrum" ? (
+          <Listbox value={token} onChange={setToken}>
+            <label className="text-teal-100 font-['Roobert'] text-md">
+              Select Tokens
+            </label>
+            <div className="relative -mt-3">
+              <Listbox.Button className="relative w-full cursor-default rounded-lg font-['Roobert'] text-gray-200 bg-neutral-700 py-3 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+                <span className="block truncate">{token[0].name}</span>
+                <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                  <IoChevronDownOutline
+                    className="h-5 w-5 text-gray-200"
+                    aria-hidden="true"
+                  />
+                </span>
+              </Listbox.Button>
+              <Transition
+                as={Fragment}
+                leave="transition ease-in duration-100"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md font-['Roobert'] bg-neutral-700 py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+                  {tokenOptions.map((token, tokenIdx) => (
+                    <Listbox.Option
+                      key={tokenIdx}
+                      className={({ active }) =>
+                        `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                          active
+                            ? "bg-neutral-800 text-teal-300"
+                            : "text-gray-200"
+                        }`
+                      }
+                      value={token}
+                    >
+                      {({ selected }) => (
+                        <>
+                          <span
+                            className={`block truncate ${
+                              selected ? "font-medium" : "font-normal"
+                            }`}
+                          >
+                            {token[0].name}
+                          </span>
+                          {selected ? (
+                            <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-teal-400">
+                              <FaCheck className="h-4 w-4" aria-hidden="true" />
+                            </span>
+                          ) : null}
+                        </>
+                      )}
+                    </Listbox.Option>
+                  ))}
+                </Listbox.Options>
+              </Transition>
+            </div>
+          </Listbox>
+        ) : null} */}
+
         <div className="flex mt-2 items-center justify-center">
           <button
-          onClick={() => {
-          
-            write?.();
-            // console.log("data", data);
-          }}
-          className="flex flex-row w-[60%] md:w-[50%] gap-2 font=['Roobert'] justify-center items-center text-teal-300 bg-neutral-700 hover:bg-teal-400 hover:text-black p-2 px-4 rounded-3xl">
+            onClick={() => {
+              write?.();
+              // console.log("data", data);
+            }}
+            className="flex flex-row w-[60%] md:w-[50%] gap-2 font=['Roobert'] justify-center items-center text-teal-300 bg-neutral-700 border border-teal-400 hover:bg-teal-400 hover:text-black p-2 px-4 rounded-3xl"
+          >
             Create bucket
           </button>
         </div>
