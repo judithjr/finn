@@ -1,4 +1,4 @@
-import Card from "@/components/Card";
+import Card from "@/components/card";
 import Head from "next/head";
 import { useContractRead, useAccount } from "wagmi";
 import { mumbaiAddress } from "@/utils/constants";
@@ -41,7 +41,7 @@ export default function Deposit() {
     address: mumbaiAddress,
     abi: factoryABI,
     functionName: "getBucketsByCreator",
-    args: [address],
+    args: ["0x03EAC4DEB62AAEAA17939f58E46AdA0C81F60AC0"],
     onError: (error) => {
       console.log("error", error);
     },

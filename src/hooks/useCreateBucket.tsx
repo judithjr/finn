@@ -40,9 +40,7 @@ export default function useCreateBucket() {
         try {
             const { hash } = await writeAsync({
                 args: [
-                    0, 
                     isPublic, 
-                    0, 
                     getAddresses(selectedTokens),
                     convertArrayToNumbers(proportion), 
                     chains, 
