@@ -80,8 +80,9 @@ export default function Deposit() {
         </h1>
         <div className="flex gap-5 flex-wrap">
           {buckets.map((bucket) => {
+            console.log("Bucet is",bucket)
             return (
-              <Card key={bucket.id} name={bucket.name} desc={bucket.desc} />
+              <Card key={bucket.id} data={bucket} />
             );
           })}
         </div>

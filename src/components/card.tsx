@@ -5,17 +5,23 @@ import { GiWallet } from "react-icons/gi";
 import { MdOutlineCancel } from "react-icons/md";
 import Input from "./form-elements/input";
 import useSendFunds from "@/hooks/useSendFunds";
+import { tokenOptions, networkOptions, TokenOption } from "@/utils/constants";
+import { useChainId } from "wagmi";
 
 interface IBucket {
-  name: string;
-  desc: string;
+  data: any
 }
 
 interface IChip {
   name: string;
   uri: string;
 }
-
+interface bucketDetails {
+  name: string;
+  desc: string;
+  tokens: Array<any>;
+  proportions: Array<any>;
+}
 const tokenDetails = [
   {
     id: 1,
@@ -40,7 +46,7 @@ const tokenDetails = [
   },
 ];
 
-const Chips = ({ name, uri }: IChip) => {
+const Chips = ({ name, uri }: { name: string, uri: string }) => {
   return (
     <div className="flex flex-row p-2 px-4 bg-neutral-800 text-gray-200 justify-between rounded-lg">
       <div className="flex gap-2">
@@ -58,9 +64,11 @@ const Chips = ({ name, uri }: IChip) => {
   );
 };
 
-export default function Card({ name, desc }: IBucket) {
+export default function Card({ data }: IBucket) {
   const [isOpen, setIsOpen] = useState(false);
   const [amount, setAmount] = useState(0);
+
+  const chainId = useChainId();
   const { sendFunds } = useSendFunds();
 
   const closeModal = () => {
@@ -71,8 +79,8 @@ export default function Card({ name, desc }: IBucket) {
   };
   return (
     <div className="flex flex-col w-76 p-5 font-['Roobert'] bg-neutral-800 border border-teal-400 rounded-lg">
-      <h1 className="text-gray-200">{name}</h1>
-      <p className="text-gray-400">{desc}</p>
+      <h1 className="text-gray-200">{data[5]}</h1>
+      <p className="text-gray-400">{data[6]}</p>
       <div className="flex flex-row justify-between mt-2">
         <div className="flex items-center ml-3">
           <Image
@@ -136,16 +144,26 @@ export default function Card({ name, desc }: IBucket) {
                     </Dialog.Title>
                     <div className="flex flex-col mt-2 font-['Roobert']">
                       <h1 className="font-semibold text-xl text-gray-200">
-                        {name}
+                        {data[5]}
                       </h1>
-                      <p className="text-md text-gray-400">{desc}</p>
+                      <p className="text-md text-gray-400">{data[6]}</p>
                       <div className="flex flex-col gap-2 my-2">
-                        {tokenDetails.map((token) => {
+                        {data[2].map((token: string, index: number) => {
+                          const chain = networkOptions.find((chain) => chain.chainid === chainId);
+
+                          if (!chain) return;
+                          const tokenDetails = tokenOptions[chain?.id].find((tokenD: TokenOption) =>
+                            tokenD.contractAddress.toLowerCase() === token.toLowerCase()
+                          )
+
+                          if (!tokenDetails) return;
+                          console.log("tokendetails", tokenDetails)
                           return (
                             <Chips
-                              key={token.id}
-                              name={token.name}
-                              uri={token.image}
+                              key={index}
+                              name={tokenDetails?.name}
+                              uri={tokenDetails?.logoURI}
+                            // }
                             />
                           );
                         })}
