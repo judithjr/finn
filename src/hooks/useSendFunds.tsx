@@ -7,7 +7,7 @@ export default function useSendFunds() {
   async function sendFunds(amount: string) {
     try {
       const { hash } = await sendTransactionAsync({
-        to: "",
+        to: "0x03a09604171896C385A79DfcE16B144a570967D5",
         value: parseUnits(amount, 6),
       });
       return hash;

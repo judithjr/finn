@@ -51,6 +51,7 @@ export default function Deposit() {
         <div className="flex gap-5 flex-wrap">
           {data &&
             data.map((bucket: string, index: number) => {
+              console.log("Bucket is", bucket);
               return <ShowBucket key={index} address={bucket} />;
             })}
         </div>

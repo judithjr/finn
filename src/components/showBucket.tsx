@@ -3,29 +3,20 @@ import finnABI from "@/utils/contract/finnABI.json";
 import { useContractRead } from "wagmi";
 
 export default function ShowBucket({ address }: { address: string }) {
-  const { data: name } = useContractRead({
+  const { data: bucketDetails, isLoading } = useContractRead({
     address: address as `0x${string}`,
     abi: finnABI,
-    functionName: "name",
+    functionName: "getBucketDetails",
+    args: [address],
     onError: (error) => {
-      console.log("error", error);
+      console.log("error isss", error);
     },
     onSuccess: (data: any) => {
-      console.log("fetched", data);
+      console.log("fetched isss", data);
     },
   });
-
-  const { data: description } = useContractRead({
-    address: address as `0x${string}`,
-    abi: finnABI,
-    functionName: "description",
-    onError: (error) => {
-      console.log("error", error);
-    },
-    onSuccess: (data: any) => {
-      console.log("fetched", data);
-    },
-  });
-
-  return <Card key={name} name={name} desc={description} />;
+if (isLoading) {
+    return <p>Loading...</p>;
+  }
+  return <Card data={bucketDetails}  />;
 }

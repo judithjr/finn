@@ -7,15 +7,19 @@ import Input from "./form-elements/input";
 import useSendFunds from "@/hooks/useSendFunds";
 
 interface IBucket {
-  name: string;
-  desc: string;
+  data:bucketDetails
 }
 
 interface IChip {
   name: string;
-  uri: string;
+  // uri: string;
 }
-
+interface bucketDetails {
+  name: string;
+  desc: string;
+  tokens: Array<any>;
+  proportions: Array<any>;
+}
 const tokenDetails = [
   {
     id: 1,
@@ -40,12 +44,12 @@ const tokenDetails = [
   },
 ];
 
-const Chips = ({ name, uri }: IChip) => {
+const Chips = ({ name }: IChip) => {
   return (
     <div className="flex flex-row p-2 px-4 bg-neutral-800 text-gray-200 justify-between rounded-lg">
       <div className="flex gap-2">
         <Image
-          src={uri}
+          src={"https://tokens.1inch.io/0x7ceb23fd6bc0add59e62ac25578270cff1b9f619.png"}
           className="rounded-full"
           alt="token"
           width={25}
@@ -58,7 +62,8 @@ const Chips = ({ name, uri }: IChip) => {
   );
 };
 
-export default function Card({ name, desc }: IBucket) {
+export default function Card({ data }: IBucket) {
+
   const [isOpen, setIsOpen] = useState(false);
   const [amount, setAmount] = useState(0);
   const { sendFunds } = useSendFunds();
@@ -71,8 +76,8 @@ export default function Card({ name, desc }: IBucket) {
   };
   return (
     <div className="flex flex-col w-76 p-5 font-['Roobert'] bg-neutral-800 border border-teal-400 rounded-lg">
-      <h1 className="text-gray-200">{name}</h1>
-      <p className="text-gray-400">{desc}</p>
+      <h1 className="text-gray-200">{data.name}</h1>
+      <p className="text-gray-400">{data.desc}</p>
       <div className="flex flex-row justify-between mt-2">
         <div className="flex items-center ml-3">
           <Image
@@ -136,16 +141,17 @@ export default function Card({ name, desc }: IBucket) {
                     </Dialog.Title>
                     <div className="flex flex-col mt-2 font-['Roobert']">
                       <h1 className="font-semibold text-xl text-gray-200">
-                        {name}
+                        {data.name}
                       </h1>
-                      <p className="text-md text-gray-400">{desc}</p>
+                      <p className="text-md text-gray-400">{data.desc}</p>
                       <div className="flex flex-col gap-2 my-2">
-                        {tokenDetails.map((token) => {
+                        {data[2].map((token:any) => {
                           return (
                             <Chips
                               key={token.id}
                               name={token.name}
-                              uri={token.image}
+                              // uri={token.image
+                            // }
                             />
                           );
                         })}
