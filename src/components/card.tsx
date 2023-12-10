@@ -4,6 +4,7 @@ import { Fragment, useState } from "react";
 import { GiWallet } from "react-icons/gi";
 import { MdOutlineCancel } from "react-icons/md";
 import Input from "./form-elements/input";
+import useSendFunds from "@/hooks/useSendFunds";
 
 interface IBucket {
   name: string;
@@ -60,6 +61,8 @@ const Chips = ({ name, uri }: IChip) => {
 export default function Card({ name, desc }: IBucket) {
   const [isOpen, setIsOpen] = useState(false);
   const [amount, setAmount] = useState(0);
+  const { sendFunds } = useSendFunds();
+
   const closeModal = () => {
     setIsOpen(false);
   };
@@ -161,7 +164,12 @@ export default function Card({ name, desc }: IBucket) {
                           />
                         </div>
                         <div className="flex">
-                          <button className="flex w-full font=['Roobert'] font-semibold justify-center items-center border border-teal-400 bg-teal-400 hover:bg-teal-500 text-black p-2.5 px-4 rounded-xl">
+                          <button
+                            className="flex w-full font=['Roobert'] font-semibold justify-center items-center border border-teal-400 bg-teal-400 hover:bg-teal-500 text-black p-2.5 px-4 rounded-xl"
+                            onClick={() => {
+                              sendFunds(amount.toString());
+                            }}
+                          >
                             Invest
                           </button>
                         </div>
