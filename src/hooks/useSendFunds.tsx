@@ -1,15 +1,29 @@
-import { parseUnits } from "viem";
-import { useSendTransaction } from "wagmi";
+import { useContractWrite } from "wagmi";
 
 export default function useSendFunds() {
-  const { sendTransactionAsync } = useSendTransaction();
+  const USDCABI = [
+    {
+      name: "transfer",
+      type: "function",
+      inputs: [
+        { name: "to", type: "address" },
+        { name: "value", type: "uint256" },
+      ],
+    },
+  ] as const;
+
+  const { writeAsync } = useContractWrite({
+    abi: USDCABI,
+    functionName: "transfer",
+    address: "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+  });
 
   async function sendFunds(amount: string) {
     try {
-      const { hash } = await sendTransactionAsync({
-        to: "",
-        value: parseUnits(amount, 6),
+      const { hash } = await writeAsync({
+        args: ["", amount],
       });
+
       return hash;
     } catch (error) {
       console.log(error);
