@@ -41,7 +41,7 @@ export default async function handler(
 
     console.log(process.env.PRIVATE_KEY);
 
-    const provider = new ethers.JsonRpcProvider('https://rpc.ankr.com/polygon_mumbai');
+    const provider = new ethers.JsonRpcProvider('https://rpc.ankr.com/polygon');
 
     const signer = new ethers.Wallet(
       process.env.PRIVATE_KEY as string,

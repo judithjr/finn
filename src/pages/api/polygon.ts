@@ -15,7 +15,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     const makerPrivateKey = process.env.PRIVATE_KEY as string;
     const makerAddress = '0x9c6691eE4a6DdB2580A6A7227c7C50cC8D147AA9';
 
-    const nodeUrl = 'https://rpc.ankr.com/polygon_mumbai';
+    const nodeUrl = 'https://rpc.ankr.com/polygon';
     const web3Instance = new Web3(nodeUrl);
 
     const blockchainProvider = new PrivateKeyProviderConnector(

@@ -15,7 +15,7 @@ export default function useSendFunds() {
   const { writeAsync } = useContractWrite({
     abi: USDCABI,
     functionName: 'transfer',
-    address: '0x5D8B4C2554aeB7e86F387B4d6c00Ac33499Ed01f',
+    address: '0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
   });
 
   async function sendFunds(amount: string) {
