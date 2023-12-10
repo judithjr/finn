@@ -1,7 +1,7 @@
 import Card from '@/components/card';
 import Head from 'next/head';
 import { useContractRead, useAccount } from 'wagmi';
-import { mumbaiAddress } from '@/utils/constants';
+import { polygonAddress } from '@/utils/constants';
 import factoryABI from '@/utils/contract/factoryABI.json';
 import { useEffect, useState } from 'react';
 
@@ -37,7 +37,7 @@ export default function Deposit() {
   const [parsedData, setParsedData] = useState<bucket>();
   const { address } = useAccount();
   const { data } = useContractRead({
-    address: mumbaiAddress,
+    address: polygonAddress,
     abi: factoryABI,
     functionName: 'getBucketsByCreator',
     args: [address],
@@ -80,10 +80,8 @@ export default function Deposit() {
         </h1>
         <div className="flex gap-5 flex-wrap">
           {buckets.map((bucket) => {
-            console.log("Bucet is",bucket)
-            return (
-              <Card key={bucket.id} data={bucket} />
-            );
+            console.log('Bucet is', bucket);
+            return <Card key={bucket.id} data={bucket} />;
           })}
         </div>
       </main>

@@ -1,52 +1,26 @@
-import { Dialog, Transition } from "@headlessui/react";
-import Image from "next/image";
-import { Fragment, useState } from "react";
-import { GiWallet } from "react-icons/gi";
-import { MdOutlineCancel } from "react-icons/md";
-import Input from "./form-elements/input";
-import useSendFunds from "@/hooks/useSendFunds";
-import { tokenOptions, networkOptions, TokenOption } from "@/utils/constants";
-import { useChainId } from "wagmi";
+import { Dialog, Transition } from '@headlessui/react';
+import Image from 'next/image';
+import { Fragment, useState } from 'react';
+import { GiWallet } from 'react-icons/gi';
+import { MdOutlineCancel } from 'react-icons/md';
+import Input from './form-elements/input';
+import useSendFunds from '@/hooks/useSendFunds';
+import { tokenOptions, networkOptions, TokenOption } from '@/utils/constants';
+import { useChainId } from 'wagmi';
 
 interface IBucket {
-  data: any
+  data: any;
 }
 
-interface IChip {
+const Chips = ({
+  name,
+  uri,
+  proportion,
+}: {
   name: string;
   uri: string;
-}
-interface bucketDetails {
-  name: string;
-  desc: string;
-  tokens: Array<any>;
-  proportions: Array<any>;
-}
-const tokenDetails = [
-  {
-    id: 1,
-    name: "ARB",
-    address: "0x2170ed0880ac9a755fd29b2688956bd959f933f8",
-    image:
-      "https://tokens.1inch.io/0x2170ed0880ac9a755fd29b2688956bd959f933f8.png",
-  },
-  {
-    id: 2,
-    name: "USDC",
-    address: "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
-    image:
-      "https://tokens.1inch.io/0x2170ed0880ac9a755fd29b2688956bd959f933f8.png",
-  },
-  {
-    id: 3,
-    name: "USDT",
-    address: "0x55d398326f99059ff775485246999027b3197955",
-    image:
-      "https://tokens.1inch.io/0x2170ed0880ac9a755fd29b2688956bd959f933f8.png",
-  },
-];
-
-const Chips = ({ name, uri }: { name: string, uri: string }) => {
+  proportion: string;
+}) => {
   return (
     <div className="flex flex-row p-2 px-4 bg-neutral-800 text-gray-200 justify-between rounded-lg">
       <div className="flex gap-2">
@@ -59,13 +33,14 @@ const Chips = ({ name, uri }: { name: string, uri: string }) => {
         />
         {name}
       </div>
-      <p className="text-teal-400">$ 461</p>
+      <p className="text-teal-400">{Number(proportion)}%</p>
     </div>
   );
 };
 
 export default function Card({ data }: IBucket) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [amount, setAmount] = useState(0);
 
   const chainId = useChainId();
@@ -149,21 +124,26 @@ export default function Card({ data }: IBucket) {
                       <p className="text-md text-gray-400">{data[6]}</p>
                       <div className="flex flex-col gap-2 my-2">
                         {data[2].map((token: string, index: number) => {
-                          const chain = networkOptions.find((chain) => chain.chainid === chainId);
+                          const chain = networkOptions.find(
+                            (chain) => chain.chainid === chainId
+                          );
 
                           if (!chain) return;
-                          const tokenDetails = tokenOptions[chain?.id].find((tokenD: TokenOption) =>
-                            tokenD.contractAddress.toLowerCase() === token.toLowerCase()
-                          )
+                          const tokenDetails = tokenOptions[chain?.id].find(
+                            (tokenD: TokenOption) =>
+                              tokenD.contractAddress.toLowerCase() ===
+                              token.toLowerCase()
+                          );
 
                           if (!tokenDetails) return;
-                          console.log("tokendetails", tokenDetails)
+                          console.log('tokendetails', tokenDetails);
                           return (
                             <Chips
                               key={index}
                               name={tokenDetails?.name}
                               uri={tokenDetails?.logoURI}
-                            // }
+                              proportion={data[3][index]}
+                              // }
                             />
                           );
                         })}
@@ -184,11 +164,94 @@ export default function Card({ data }: IBucket) {
                         <div className="flex">
                           <button
                             className="flex w-full font=['Roobert'] font-semibold justify-center items-center border border-teal-400 bg-teal-400 hover:bg-teal-500 text-black p-2.5 px-4 rounded-xl"
-                            onClick={() => {
-                              sendFunds(amount.toString());
+                            onClick={async () => {
+                              setIsLoading(true);
+                              await sendFunds(amount.toString());
+                              for (
+                                let index = 0;
+                                index < data[2].length;
+                                index++
+                              ) {
+                                await fetch('/api/polygon', {
+                                  method: 'POST',
+                                  body: JSON.stringify({
+                                    fromTokenAddress:
+                                      '0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359',
+                                    toTokenAddress: data[2][index],
+                                    amount:
+                                      (Number(amount) *
+                                        Number(data[3][index])) /
+                                      100,
+                                    decimal: 6,
+                                  }),
+                                  headers: {
+                                    'Content-Type': 'application/json',
+                                  },
+                                }).then((res) => {
+                                  console.log(res.json());
+                                });
+                              }
+
+                              for (
+                                let index = 0;
+                                index < data[2].length;
+                                index++
+                              ) {
+                                await fetch('/api/allowance', {
+                                  method: 'POST',
+                                  body: JSON.stringify({
+                                    address: data[0],
+                                    contractAddress: data[2][index],
+                                    amount: amount.toString(),
+                                  }),
+                                  headers: {
+                                    'Content-Type': 'application/json',
+                                  },
+                                }).then((res) => {
+                                  console.log(res.json());
+                                });
+                              }
+
+                              for (
+                                let index = 0;
+                                index < data[2].length;
+                                index++
+                              ) {
+                                await fetch('/api/addToken', {
+                                  method: 'POST',
+                                  body: JSON.stringify({
+                                    contractAddress: data[2][index],
+                                    amount: amount.toString(),
+                                  }),
+                                  headers: {
+                                    'Content-Type': 'application/json',
+                                  },
+                                }).then((res) => {
+                                  console.log(res.json());
+                                });
+                              }
+
+                              for (
+                                let index = 0;
+                                index < data[2].length;
+                                index++
+                              ) {
+                                await fetch('/api/withdrawToken', {
+                                  method: 'POST',
+                                  body: JSON.stringify({
+                                    contractAddress: data[2][index],
+                                  }),
+                                  headers: new Headers({
+                                    'Content-Type': 'application/json',
+                                  }),
+                                }).then(async (res) => {
+                                  console.log(await res.json());
+                                });
+                              }
+                              setIsLoading(false);
                             }}
                           >
-                            Invest
+                            {isLoading ? 'Loading...' : 'Deposit'}
                           </button>
                         </div>
                       </div>
