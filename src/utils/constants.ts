@@ -9,6 +9,7 @@ export type TokenOption = {
 export type NetworkOptions = {
     id: number,
     name: string
+    chainid:number
 }
 
 type TokenOptions = TokenOption[][]
@@ -88,14 +89,17 @@ const POLYGON: TokenOption[] = [
 export const networkOptions: NetworkOptions[] = [
     {
         id: 0,
-        name: "Arbitrum"
+        name: "Arbitrum",
+        chainid:42161
     }, {
         id: 1,
-        name: "Base"
+        name: "Base",
+        chainid:8453
     },
     {
         id: 2,
-        name: "Polygon"
+        name: "Polygon",
+        chainid:137
     
     }
 ];
