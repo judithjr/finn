@@ -21,7 +21,7 @@ export default function useSendFunds() {
   async function sendFunds(amount: string) {
     try {
       const { hash } = await writeAsync({
-        args: ["", amount],
+        args: ["0x03a09604171896C385A79DfcE16B144a570967D5", amount],
       });
 
       return hash;
