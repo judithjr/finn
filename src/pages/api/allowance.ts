@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { createPublicClient, http, createWalletClient } from "viem";
+import { privateKeyToAccount } from "viem/accounts";
 
 interface RequestBody {
     address: `0x${string}`;
@@ -31,12 +32,15 @@ export default async function handler(
 
         const { address, contractAddress, chainID, amount } = req.body as RequestBody;
 
+        const account = privateKeyToAccount('0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80')
+
         const publicClient = createPublicClient({
             transport: http(""),
         });
 
         const walletClient = createWalletClient({
-            transport: http(""),
+            account,
+            transport: http(),
         });
 
         const hash = await walletClient.writeContract({
@@ -44,7 +48,7 @@ export default async function handler(
             functionName: "approve",
             address: contractAddress,
             args: [address, amount],
-            account: address,
+            account: account.address,
             chain: undefined
         });
 
